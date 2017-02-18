@@ -13,8 +13,6 @@
 #include <avr/sfr_defs.h>
 #include <avr/interrupt.h>
 
-//#define MYUBRR (F_CPU/16/BAUD-1)
-
 #define set_bit(VAR,BIT) ((VAR |= (1 << BIT)))
 #define clear_bit(VAR,BIT) ((VAR &= ~(1 << BIT)))
 #define is_set_bit(VAR,BIT) ((VAR & (1 << BIT)))
@@ -31,36 +29,13 @@ int main(void) {
 
     sei();
 
-    const struct StringBuffer hello = {
-        .string = "Hello",
-        .length = 5,
-    };
-
-    const struct StringBuffer konec = {
-        .string = "Konec",
-        .length = 5,
-    };
-    const struct StringBuffer menu0 = {
-        .string = "MENU:",
-        .length = 5,
-    };
-    const struct StringBuffer menu1 = {
-        .string = "0-konec",
-        .length = 7,
-    };
-    const struct StringBuffer menu2 = {
-        .string = "1-LED+",
-        .length = 6,
-    };
-    const struct StringBuffer menu3 = {
-        .string = "2-LED-",
-        .length = 6,
-    };
-    const struct StringBuffer menu4 = {
-        .string = "4-Abeceda",
-        .length = 9,
-    };
-
+    StringLiteral hello = string_builder("hello");
+    StringLiteral konec = string_builder("Konec");
+    StringLiteral menu0 = string_builder("MENU:");
+    StringLiteral menu1 = string_builder("0 - Konec");
+    StringLiteral menu2 = string_builder("1 - Zapnout LED");
+    StringLiteral menu3 = string_builder("2 - Vypnout LED");
+    StringLiteral menu4 = string_builder("4 - Abeceda");
 
     set_bit(DDRB, 5);
     set_bit(PORTB, 5);
@@ -93,7 +68,7 @@ int main(void) {
         case '2':
             set_bit(PORTB, 5);
             break;
-        case '3':
+        case '4':
             usart_println(hello);
             break;
         default:
