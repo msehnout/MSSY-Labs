@@ -31,8 +31,10 @@ void usart_transmit(const uint8_t data) {
     UDR1 = data;
 }
 
+// TODO: write generic function transmit_data(void *)
 void usart_transmit_string(const struct StringBuffer s) {
     uint8_t i = 0;
+    // TODO: use proper types and explicit conversions
     while (i < s.length && s.string[i] != '\0') {
         usart_transmit(s.string[i]);
         ++i;
