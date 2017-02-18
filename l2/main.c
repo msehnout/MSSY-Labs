@@ -16,7 +16,7 @@
 //#define MYUBRR (F_CPU/16/BAUD-1)
 
 #define set_bit(VAR,BIT) ((VAR |= (1 << BIT)))
-#define CLEARBIT(VAR,BIT) ((VAR &= ~(1 << BIT)))
+#define clear_bit(VAR,BIT) ((VAR &= ~(1 << BIT)))
 #define ISSET(VAR,BIT) ((VAR & (1 << BIT)))
 
 #include "usart.h"
@@ -64,7 +64,7 @@ int main(void) {
 
     set_bit(DDRB, 5);
     set_bit(PORTB, 5);
-    CLEARBIT(PORTB, 5);
+    clear_bit(PORTB, 5);
 
     usart_println(hello);
     while(1);
@@ -88,7 +88,7 @@ int main(void) {
             while(1);
             break;
         case '1':
-            CLEARBIT(PORTB, 5);
+            clear_bit(PORTB, 5);
             break;
         case '2':
             set_bit(PORTB, 5);
