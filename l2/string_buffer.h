@@ -14,4 +14,10 @@ struct StringBuffer {
 	uint8_t length;
 };
 
+#define string_builder(STR)      \
+    {                            \
+        .string = (STR),         \
+        .length = sizeof((STR)), \
+    }
+
 #endif /* STRING_BUFFER_H_ */
