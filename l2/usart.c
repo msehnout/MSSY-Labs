@@ -15,10 +15,10 @@ void usart_init(void) {
     /* Enable receiver and transmitter */
     UCSR1B = (1<<RXEN1)|(1<<TXEN1)|(1<<UCSZ12);
     /*UCSR1C = (1<<UPM11)|	// Odd parity
-    		 (1<<UPM10)|	//
-    		 (1<<USBS1)|	// 2 stop bits
-    		 (1<<UCSZ11)|	// 8-bits message
-    		 (1<<UCSZ10);	//*/
+      (1<<UPM10)|	//
+      (1<<USBS1)|	// 2 stop bits
+      (1<<UCSZ11)|	// 8-bits message
+      (1<<UCSZ10);	//*/
     UCSR1C = (1<<UCSZ11)|(1<<UCSZ10);
 }
 
