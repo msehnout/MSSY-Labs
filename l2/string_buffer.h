@@ -14,6 +14,8 @@ struct StringBuffer {
     uint8_t length;
 };
 
+typedef const struct StringBuffer StringLiteral;
+
 #define string_builder(STR)      \
     {                            \
         .string = (STR),         \
