@@ -2,7 +2,7 @@
  * string_buffer.h
  *
  * Created: 16.2.2017 15:53:01
- *  Author: Student
+ *  Author: Martin Sehnoutka
  */
 
 

@@ -15,7 +15,7 @@
 
 //#define MYUBRR (F_CPU/16/BAUD-1)
 
-#define SETBIT(VAR,BIT) ((VAR |= (1 << BIT)))
+#define set_bit(VAR,BIT) ((VAR |= (1 << BIT)))
 #define CLEARBIT(VAR,BIT) ((VAR &= ~(1 << BIT)))
 #define ISSET(VAR,BIT) ((VAR & (1 << BIT)))
 
@@ -27,7 +27,7 @@ int main(void) {
     CLKPR = 0x01; // Change division factor to 2
 
     usart_init();
-    SETBIT(UCSR1B, RXCIE1);
+    set_bit(UCSR1B, RXCIE1);
 
     sei();
 
@@ -62,8 +62,8 @@ int main(void) {
     };
 
 
-    SETBIT(DDRB, 5);
-    SETBIT(PORTB, 5);
+    set_bit(DDRB, 5);
+    set_bit(PORTB, 5);
     CLEARBIT(PORTB, 5);
 
     usart_println(hello);
@@ -91,7 +91,7 @@ int main(void) {
             CLEARBIT(PORTB, 5);
             break;
         case '2':
-            SETBIT(PORTB, 5);
+            set_bit(PORTB, 5);
             break;
         case '3':
             usart_println(hello);
