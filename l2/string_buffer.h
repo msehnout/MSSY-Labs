@@ -11,7 +11,7 @@
 
 struct StringBuffer {
     char *string;
-    uint8_t length;
+    size_t length;
 };
 
 typedef const struct StringBuffer StringLiteral;

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#define uint8_t int
 #include "string_buffer.h"
 
 int main() {

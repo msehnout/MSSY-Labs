@@ -17,6 +17,8 @@
 #define clear_bit(VAR,BIT) ((VAR &= ~(1 << BIT)))
 #define is_set_bit(VAR,BIT) ((VAR & (1 << BIT)))
 
+// I guess this is a bit ugly hack, but who cares?
+#define size_t uint8_t
 #include "usart.h"
 
 int main(void) {

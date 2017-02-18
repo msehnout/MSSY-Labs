@@ -31,12 +31,18 @@ void usart_transmit(const uint8_t data) {
     UDR1 = data;
 }
 
-// TODO: write generic function transmit_data(void *)
+void usart_transmit_buffer(const void *data, size_t length) {
+    size_t i = 0;
+    uint8_t array = (uint8_t *)data;
+    for (i=0; i < length; ++i) {
+        usart_transmit(array[i]);
+    }
+}
+
 void usart_transmit_string(const struct StringBuffer s) {
-    uint8_t i = 0;
-    // TODO: use proper types and explicit conversions
+    size_t i = 0;
     while (i < s.length && s.string[i] != '\0') {
-        usart_transmit(s.string[i]);
+        usart_transmit((uint8_t)s.string[i]);
         ++i;
     }
 }
