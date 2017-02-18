@@ -7,9 +7,9 @@
 
 #include "usart.h"
 
-void USART_init(void)
+void usart_init(void)
 {
-	/* Setup USART1 */
+	/* Setup usart1 */
 	//uint16_t baud_rate = MYUBRR;
 	UBRR1H = UBRRH_VALUE;// (uint8_t)(baud_rate>>8);
 	UBRR1L = UBRRL_VALUE;//(uint8_t)baud_rate;
@@ -23,7 +23,7 @@ void USART_init(void)
 	UCSR1C = (1<<UCSZ11)|(1<<UCSZ10);
 }
 
-void USART_Transmit(const uint8_t data)
+void usart_transmit(const uint8_t data)
 {
 	/* Wait for empty transmit buffer */
 	//while ( !( UCSR1A & (1<<UDRE1)) )
@@ -37,7 +37,7 @@ void usart_transmit_string(const struct StringBuffer s)
 {
 	uint8_t i = 0;
 	while (i < s.length && s.string[i] != '\0') {
-		USART_Transmit(s.string[i]);
+		usart_transmit(s.string[i]);
 		++i;
 	}
 }
@@ -53,7 +53,7 @@ void usart_println(const struct StringBuffer s)
 	usart_transmit_string(line_ending);
 }
 
-uint8_t USART_Receive( void )
+uint8_t usart_receive( void )
 {
 	/* Wait for data to be received */
 	//while ( !(UCSR1A & (1<<RXC1)) )

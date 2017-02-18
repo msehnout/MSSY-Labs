@@ -27,7 +27,7 @@ int main(void)
 	CLKPR = 0x80; // Enable CLKPR change
 	CLKPR = 0x01; // Change division factor to 2
 	
-	USART_init();
+	usart_init();
 	SETBIT(UCSR1B, RXCIE1);
 	
 	sei();
@@ -81,8 +81,8 @@ int main(void)
     while (1) 
     {
 		uint8_t recv;
-		/* Recieve character */
-		recv = USART_Receive();
+		/* receive character */
+		recv = usart_receive();
 		/* Send back the character */
 		switch (recv) {
 			case '0':
@@ -101,7 +101,7 @@ int main(void)
 			default:
 				break;	
 		}
-		//USART_Transmit(recv);
+		//usart_transmit(recv);
     }
 }
 
@@ -109,8 +109,8 @@ ISR(USART1_RX_vect)
 {
 	uint8_t recv;
 	/* Recv character */
-	recv = USART_Receive();
+	recv = usart_receive();
 	/* Send back the character */
-	USART_Transmit(recv);
-	USART_Transmit(recv);
+	usart_transmit(recv);
+	usart_transmit(recv);
 }
