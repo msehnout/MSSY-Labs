@@ -17,7 +17,7 @@
 
 #define set_bit(VAR,BIT) ((VAR |= (1 << BIT)))
 #define clear_bit(VAR,BIT) ((VAR &= ~(1 << BIT)))
-#define ISSET(VAR,BIT) ((VAR & (1 << BIT)))
+#define is_set_bit(VAR,BIT) ((VAR & (1 << BIT)))
 
 #include "usart.h"
 
