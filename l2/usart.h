@@ -26,12 +26,13 @@ enum UsartStopBits {
 };
 
 struct UsartBuilder {
-   enum UsartSpeed speed,
-   enum UsartDataBits data_bits,
-   enum UsartParity parity,
-   enum UsartSpeed stop_bits,
+   enum UsartSpeed speed;
+   enum UsartDataBits data_bits;
+   enum UsartParity parity;
+   enum UsartSpeed stop_bits;
 };
 
+#ifndef __TESTING__
 
 /// Initialize USART1
 void usart_init(void);
@@ -54,4 +55,5 @@ void usart_transmit_string(const struct StringBuffer s);
 /// Transmit string followed by \n\r
 void usart_println(const struct StringBuffer s);
 
+#endif // __TESTING__
 #endif // usart_H_

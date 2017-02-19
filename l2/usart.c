@@ -1,12 +1,46 @@
 
+#ifndef __TESTING__
 #include <avr/io.h>
 #define F_CPU 8000000UL
 #define BAUD 9600
 #include <util/setbaud.h>
 #include <avr/sfr_defs.h>
+#endif // __TESTING__
 
 #include "usart.h"
+#include "return_t.h"
 
+#ifndef RX_BUFFER_SIZE
+#define RX_BUFFER_SIZE 256
+#endif
+
+#ifndef TX_BUFFER_SIZE
+#define TX_BUFFER_SIZE 256
+#endif
+
+#ifndef index_t
+#define index_t uint16_t
+#endif
+
+/// Recieve buffer
+static uint8_t RX_BUFFFER[RX_BUFFFER_SIZE] = {0};
+/// Points to the end of data portion in buffer
+static index_t RX_IDX = 0;
+/// Transmit buffer
+static uint8_t TX_BUFFFER[TX_BUFFFER_SIZE] = {0};
+/// Points to the end of data portion in buffer
+/// XXX: Maybe I should have two of these, so I don't have to move the whole
+// buffer with every byte sent
+static index_t TX_IDX = 0;
+
+#ifdef __TESTING__
+void usart_get_buffers(uint8_t **tx_buffer, uint8_t **rx_buffer) {
+    *tx_buffer = TX_BUFFFER;
+    *rx_buffer = RX_BUFFFER;
+}
+#endif // __TESTING__
+
+#ifndef __TESTING__
 void usart_init(void) {
     /* Setup usart1 */
     //uint16_t baud_rate = MYUBRR;
@@ -63,4 +97,40 @@ uint8_t usart_receive( void ) {
     loop_until_bit_is_set(UCSR1A, RXC1);
     /* Get and return received data from buffer */
     return UDR1;
+}
+
+#endif // __TESTING__
+
+// This functions should be used from the main loop
+return_t usart_tx_buffer_push(const uint8_t byte) {
+    if (TX_IDX < TX_BUFFFER_SIZE) {
+        TX_BUFFFER[TX_IDX] = byte;
+        ++TX_IDX;
+        return RET_SUCCESS;
+    } else {
+        // Let's panic!
+        return RET_BUFFER_OVERFLOW;
+    }
+}
+
+// This function is supposed to be called from interrupt
+return_t usart_rx_buffer_push(const uint8_t byte) {
+    if (RX_IDX < RX_BUFFFER_SIZE) {
+        RX_BUFFFER[RX_IDX] = byte;
+        ++RX_IDX;
+        return RET_SUCCESS;
+    } else {
+        // Let's panic!
+        return RET_BUFFER_OVERFLOW;
+    }
+}
+
+return_t usart_rx_view_slice(uint8_t **view, const index_t length) {
+    if (length <= RX_IDX) {
+        *view = RX_BUFFFER;
+        return RET_SUCCESS;
+    } else {
+        *view = NULL;
+        return RET_NOT_ENOUGH_DATA;
+    }
 }
